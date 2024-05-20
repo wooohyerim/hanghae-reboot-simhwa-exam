@@ -1,18 +1,24 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 /**
  * 2초 지연을 시키는 함수입니다 (비동기 작업).
  */
-import { waitTwoSeconds } from '../../utils';
+import { waitTwoSeconds } from "../../utils";
 
 export const __addToDo = createAsyncThunk(
-  '__addToDo',
-  async (payload, thunkAPI) => {}
+  "__addToDo",
+  async (payload, thunkAPI) => {
+    await waitTwoSeconds();
+    thunkAPI.dispatch(addTodo(payload));
+  }
 );
 
 export const __deleteTodo = createAsyncThunk(
-  '__deleteToDo',
-  async (payload, thunkAPI) => {}
+  "__deleteToDo",
+  async (payload, thunkAPI) => {
+    await await waitTwoSeconds();
+    thunkAPI.dispatch(deleteTodo(payload));
+  }
 );
 
 const initialState = {
@@ -20,11 +26,15 @@ const initialState = {
 };
 
 const todosSlice = createSlice({
-  name: 'todos',
+  name: "todos",
   initialState,
   reducers: {
-    addTodo: (state, action) => {},
-    deleteTodo: (state, action) => {},
+    addTodo: (state, action) => {
+      state.list.push(action.payload);
+    },
+    deleteTodo: (state, action) => {
+      state.list = state.list.filter((item) => item.id !== action.payload.id);
+    },
   },
 });
 
